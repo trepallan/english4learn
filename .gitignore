@@ -3,3 +3,7 @@ server/tsconfig.json
 
 client/node_modules/**
 client/tsconfig.json
+
+.env
+
+activities
