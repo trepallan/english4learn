@@ -3,27 +3,39 @@ import api from "../../authentication/api";
 import "../../css/auth.css";
 
 interface User {
+  username: string;
   password: string;
+  confirmPassword: string;
   email: string;
 }
 
-function Login({ setpath }: any) {
+function Register({ setpath }: any) {
   const [user, setUser] = useState<User>({
+    username: "",
     password: "",
+    confirmPassword: "",
     email: "",
   });
 
-  function LoginFunction(event: any) {
+  function RegisterFunction(event: any) {
     event.preventDefault();
 
-    api.post("/authorization/login", user);
+    api.post("/authorization/register", user);
   }
   return (
     <div className="authForm">
-      <h1>Login</h1>
+      <h1>Register</h1>
       <hr />
+      <form className="form-group" onSubmit={RegisterFunction}>
+        <label htmlFor="username">Username</label>
+        <input
+          type="text"
+          className="form-control"
+          id="username"
+          value={user.username}
+          onChange={(e) => setUser({ ...user, username: e.target.value })}
+        />
 
-      <form className="form-group" onSubmit={LoginFunction}>
         <label htmlFor="email">Email</label>
         <input
           type="email"
@@ -42,13 +54,24 @@ function Login({ setpath }: any) {
           onChange={(e) => setUser({ ...user, password: e.target.value })}
         />
 
+        <label htmlFor="confirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          className="form-control"
+          id="confirmPassword"
+          value={user.confirmPassword}
+          onChange={(e) =>
+            setUser({ ...user, confirmPassword: e.target.value })
+          }
+        />
+
         <div className="footer">
           <p>
-            Not registered? <i onClick={() => setpath("/register")}>Register</i>
+            Already registered? <i onClick={() => setpath("/login")}>Login</i>
           </p>
 
           <button type="submit" className="btn btn-primary">
-            Login
+            Register
           </button>
         </div>
       </form>
@@ -56,4 +79,4 @@ function Login({ setpath }: any) {
   );
 }
 
-export default Login;
+export default Register;

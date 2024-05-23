@@ -1,0 +1,46 @@
+.LoginMain {
+  background-image: url("../../public/spaceCat.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+.authForm {
+  position: absolute;
+  right: 20px;
+  padding: 20px;
+  min-height: 430px;
+  width: 350px;
+  color: rgb(166, 164, 164);
+  background-color: rgba(53, 36, 72, 0.5);
+}
+
+@media (max-width: 768px) {
+  .authForm {
+    width: 100%;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    padding: 20px;
+  }
+}
+
+.authForm .footer {
+  bottom: 0;
+  position: absolute;
+}
+
+.authForm .footer i {
+  cursor: pointer;
+  color: rgb(69, 55, 228);
+}
+
+.authForm .footer button {
+  width: 100%;
+}
+
+.centerForm input {
+  width: 100%;
+}
