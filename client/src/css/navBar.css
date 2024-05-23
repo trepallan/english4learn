@@ -1,0 +1,22 @@
+.navbar-brand {
+  font-size: 3vmin;
+  font-family: Georgia, serif;
+  cursor: pointer;
+}
+
+.navbar button {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.navbar .logoutBtn:hover {
+  background-color: rgb(143, 59, 59);
+}
+
+.navbar .loginBtn:hover {
+  background-color: rgb(59, 115, 143);
+}
+
+.navbar .registerBtn:hover {
+  background-color: rgb(59, 143, 91);
+}

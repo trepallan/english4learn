@@ -4,8 +4,6 @@ import cors from "cors";
 import startup from "./startup/startup";
 import mongoose from "mongoose";
 import "dotenv/config";
-import path from "path";
-import logger from "morgan";
 
 // Conect to MongoDB
 (async function connect() {
@@ -25,10 +23,7 @@ const corsOptions = {
 
 export const app = express();
 app.use(cors(corsOptions));
-app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "public")));
 
 startup(app);
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../../authentication/api";
+import logUser from "../../utils/logUser";
 import "../../css/auth.css";
 
 interface User {
@@ -12,12 +13,27 @@ function Login({ setpath }: any) {
     password: "",
     email: "",
   });
+  const [message, setMessage] = useState<string>("");
 
-  function LoginFunction(event: any) {
+  async function LoginFunction(event: any) {
     event.preventDefault();
 
-    api.post("/authorization/login", user);
+    if (user.email === "" || user.password === "") {
+      setMessage("All fields are required");
+      return;
+    }
+
+    const response = await api.post("/authorization/login", user);
+
+    if (response.status !== 200) {
+      setMessage(response.message);
+      return;
+    }
+
+    logUser(response);
+    window.location.href = "/";
   }
+
   return (
     <div className="authForm">
       <h1>Login</h1>
@@ -28,6 +44,8 @@ function Login({ setpath }: any) {
         <input
           type="email"
           className="form-control"
+          required
+          autoComplete="current-email"
           id="email"
           value={user.email}
           onChange={(e) => setUser({ ...user, email: e.target.value })}
@@ -37,7 +55,9 @@ function Login({ setpath }: any) {
         <input
           type="password"
           className="form-control"
+          autoComplete="current-password"
           id="password"
+          required
           value={user.password}
           onChange={(e) => setUser({ ...user, password: e.target.value })}
         />
@@ -47,7 +67,9 @@ function Login({ setpath }: any) {
             Not registered? <i onClick={() => setpath("/register")}>Register</i>
           </p>
 
-          <button type="submit" className="btn btn-primary">
+          {message && <div className="alert alert-danger">{message}</div>}
+
+          <button type="submit" className="btn btn-primary btn-lg">
             Login
           </button>
         </div>

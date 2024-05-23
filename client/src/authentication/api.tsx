@@ -21,12 +21,18 @@ async function request(config: { method: string; path: string; body?: any }) {
     headers,
   };
 
-  const response = await fetch(conf.url, {
-    method: conf.method,
-    headers: conf.headers,
-    body: JSON.stringify(conf.body),
-  });
-  return response;
+  try {
+    const response = await fetch(conf.url, {
+      method: conf.method,
+      headers: conf.headers,
+      body: JSON.stringify(conf.body),
+    });
+    const data = await response.json();
+    data.status = response.status;
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 //   /$$$$$$  /$$$$$$$  /$$$$$$

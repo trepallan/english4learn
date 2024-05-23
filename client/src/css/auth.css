@@ -7,6 +7,23 @@
   width: 100vw;
   position: relative;
 }
+
+.LoginMain .logo {
+  position: absolute;
+  margin: 5px;
+  font-family: Georgia, serif;
+  font-size: 40px;
+  top: 20px;
+  left: 20px;
+  color: rgb(0, 0, 0);
+}
+
+@media (max-width: 768px) {
+  .LoginMain .logo {
+    top: 0;
+  }
+}
+
 .authForm {
   position: absolute;
   right: 20px;
@@ -19,9 +36,7 @@
 
 @media (max-width: 768px) {
   .authForm {
-    width: 100%;
-    right: 0;
-    left: 0;
+    bottom: 0;
     margin: 0 auto;
     padding: 20px;
   }
@@ -29,7 +44,7 @@
 
 .authForm .footer {
   bottom: 0;
-  position: absolute;
+  position: relative;
 }
 
 .authForm .footer i {
@@ -39,6 +54,7 @@
 
 .authForm .footer button {
   width: 100%;
+  margin: 10px;
 }
 
 .centerForm input {

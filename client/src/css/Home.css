@@ -1,0 +1,15 @@
+.Home {
+  text-align: center;
+}
+
+.Home .startActivity {
+  width: 40%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid rgb(147, 231, 210);
+  background-color: rgb(216, 255, 234);
+  border-radius: 10px;
+  padding: 10px;
+}

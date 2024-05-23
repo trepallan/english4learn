@@ -1,21 +1,36 @@
 import UserModel from "../../../models/user";
+import jwtCreate from "../../utils/jwtCreate";
 import bcrypt from "bcrypt";
 
-function register(request: any, response: any) {
-  const { username, password, confirmPassword, email } = request.body;
+async function register(request: any, response: any) {
+  try {
+    const { username, password, confirmPassword, email } = request.body;
+    if (password !== confirmPassword) {
+      return response.status(400).json({
+        message: "Passwords do not match",
+      });
+    }
 
-  if (password !== confirmPassword) {
+    const hashed_password = bcrypt.hashSync(password, 10);
+    const user = await UserModel.create({
+      username,
+      hashed_password,
+      email,
+    });
+
+    if (!user) {
+      return response.status(400).json({
+        message: "Failed to create user",
+      });
+    }
+
+    const auth = jwtCreate(user);
+    return response.status(201).json({ user, auth });
+  } catch (error) {
     return response.status(400).json({
-      error: new Error("Passwords do not match"),
+      message: "Internal server error",
     });
   }
-
-  const hashed_password = bcrypt.hashSync(password, 10);
-  const user = new UserModel({
-    username,
-    hashed_password,
-    email,
-  });
 }
 
 export default register;
