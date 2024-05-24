@@ -17,10 +17,12 @@ function NavBar() {
           english4learn
         </a>
 
-        {isLogged && (
+        {isLogged ? (
           <span className="text-light navbar-toggler">
             Welcome {username.current}
           </span>
+        ) : (
+          <>Not Logged</>
         )}
 
         <div className="d-flex" role="search">

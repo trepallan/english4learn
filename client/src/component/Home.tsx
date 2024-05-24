@@ -18,7 +18,7 @@ function Home() {
         <hr />
         <p>Or</p>
 
-        <a href="/select-unit">Select Unit</a>
+        <a href="/select-course">Select Course</a>
       </div>
     </div>
   );
