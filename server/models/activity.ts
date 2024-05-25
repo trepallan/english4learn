@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 // activity
 
 const activitySchema = new mongoose.Schema({
-  subject: {
+  theme: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Subject",
+    ref: "Theme",
     required: true,
   },
-  indice: {
+  index: {
     type: Number,
     required: true,
   },

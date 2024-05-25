@@ -3,19 +3,17 @@ import ProtectedRoutes from "./ProtectRoutes/RoutesProtect";
 import Home from "../component/Home";
 import Auth from "../component/authorization/Auth";
 import NavBar from "../component/navBar/NavBar";
-import SelectUnit from "../component/sleceUtil/SelectUnit";
-import Selectlesson from "../component/sleceUtil/Selectlesson";
+import SelectCourseRoute from "../component/selectCourse/Routes";
 
 function AppRouter() {
   return (
     <>
-      <NavBar />
       <BrowserRouter>
+        <NavBar />
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
-          <Route path="/select-course" element={<SelectUnit />} />
-          <Route path="/select-course/unit/:id" element={<Selectlesson />} />
+          <Route path="/select-course/*" element={<SelectCourseRoute />} />
           <Route path="/register" element={<Auth />} />
           <Route path="/login" element={<Auth />} />
 

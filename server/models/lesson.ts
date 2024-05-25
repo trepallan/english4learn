@@ -6,11 +6,11 @@ const lessonSchema = new mongoose.Schema({
     ref: "Unit",
     required: true,
   },
-  indice: {
+  name: String,
+  index: {
     type: Number,
     required: true,
   },
-  name: String,
   theme_count: Number,
 });
 

@@ -6,12 +6,12 @@ const themeSchema = new mongoose.Schema({
     ref: "Lesson",
     required: true,
   },
-  name: String,
-  indice: {
+  index: {
     type: Number,
     required: true,
   },
-  subject_count: Number,
+  name: String,
+  activity_count: Number,
 });
 
 export default mongoose.model("Theme", themeSchema);
