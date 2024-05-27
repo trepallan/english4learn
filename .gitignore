@@ -7,3 +7,4 @@ client/tsconfig.json
 .env
 
 activities
+client/public/

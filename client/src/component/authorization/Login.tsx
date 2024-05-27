@@ -45,7 +45,7 @@ function Login({ setpath }: any) {
           type="email"
           className="form-control"
           required
-          autoComplete="current-email"
+          autoComplete="email"
           id="email"
           value={user.email}
           onChange={(e) => setUser({ ...user, email: e.target.value })}

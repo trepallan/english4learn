@@ -14,6 +14,12 @@ interface classe {
 // Course -> Unit -> Lesson -> Theme -> Activity
 const classeOrder: classe[] = [
   {
+    name: "Main",
+    aTagLink: "/select-course/",
+    apiPath: "/",
+    children: "",
+  },
+  {
     name: "Course",
     aTagLink: "/select-course/unit/",
     apiPath: "/courses",
@@ -34,15 +40,9 @@ const classeOrder: classe[] = [
   },
   {
     name: "Theme",
-    aTagLink: "/select-course/activity/",
+    aTagLink: "/activity/", // The activity will use the theme ID
     apiPath: "/courses/themes/",
     children: "Activity",
-  },
-  {
-    name: "Activity",
-    aTagLink: "/select-course/",
-    apiPath: "/courses/activities/",
-    children: null,
   },
 ];
 
@@ -62,7 +62,7 @@ export default function SelectCourse(props: any) {
   const classeType = props.classeType;
   let classId = useParams().id;
   if (!classId) classId = "";
-  const [path, setPath] = useState([]);
+  const [path, setPath] = useState<any[]>([]);
   const [courses, setCourses] = useState<Course[]>([]);
   const [message, setMessage] = useState("");
 
@@ -80,7 +80,9 @@ export default function SelectCourse(props: any) {
         return;
       }
       setCourses(response.data);
-      setPath(response.path);
+
+      const main = { name: "Courses", id: "", type: "Main" }; // The main path is always the first
+      setPath([main, ...response.path]);
     })();
   }, [classId, classe]);
 
