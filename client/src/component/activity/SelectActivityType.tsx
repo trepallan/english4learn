@@ -1,4 +1,5 @@
 import ReadType from "./types/ReadType";
+import QuizType from "./types/QuizType";
 
 function SelectActivityType(props: any) {
   const { activity } = props;
@@ -9,7 +10,7 @@ function SelectActivityType(props: any) {
     case "mutioption":
       return <div>SelectActivityType</div>;
     case "quiz":
-      return <div>SelectActivityType</div>;
+      return <QuizType activity={activity} />;
     case "read":
       return <ReadType activity={activity} />;
     case "pronunciation":

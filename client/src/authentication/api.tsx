@@ -1,3 +1,6 @@
+import refreshToken from "./refreshToken";
+import logout from "../utils/logout";
+
 interface apiConfig {
   url: string;
   method: string;
@@ -6,19 +9,28 @@ interface apiConfig {
 }
 
 const url = "http://localhost:5000";
-const headers = {
-  "Content-Type": "application/json",
-  Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-};
+let token = localStorage.getItem("auth_token");
+
+function getHeaders(Newtoken?: string) {
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${Newtoken || token}`, //Refresh token or old token
+  };
+}
 
 // Request interceptor
-async function request(config: { method: string; path: string; body?: any }) {
-  const { method, path, body } = config;
+async function request(config: {
+  method: string;
+  path: string;
+  body?: any;
+  refreshedToken?: string;
+}): Promise<any> {
+  const { method, path, body, refreshedToken } = config;
   const conf: apiConfig = {
     url: `${url}` + path,
     method,
     body,
-    headers,
+    headers: getHeaders(refreshedToken),
   };
 
   try {
@@ -29,6 +41,24 @@ async function request(config: { method: string; path: string; body?: any }) {
     });
     const data = await response.json();
     data.status = response.status;
+
+    if (response.status === 401) {
+      if (data.message === "expired refresh token") {
+        return logout();
+      }
+
+      try {
+        // refresh token
+        token = (await refreshToken()) as string;
+        if (!token) throw new Error("could not refresh token");
+        config.refreshedToken = token;
+        return await request(config);
+      } catch (error) {
+        console.log(error);
+        logout();
+        return;
+      }
+    }
     return data;
   } catch (error) {
     console.log(error);

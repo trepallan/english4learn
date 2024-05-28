@@ -4,10 +4,11 @@ import TableDiv from "./div/TableDiv";
 import AudioDiv from "./div/AudioDiv";
 import HeaderDiv from "./div/HeaderDiv";
 
-function ReadType(props: any) {
+function QuizType(props: any) {
   const { activity } = props;
   const hascontent = activity.hasMedia || activity.text || activity.table;
 
+  console.log(activity);
   return (
     <>
       {activity.header && <HeaderDiv activity={activity} />}
@@ -19,9 +20,22 @@ function ReadType(props: any) {
           {activity.table && <TableDiv activity={activity} />}
         </div>
       )}
+
+      <div className="quizOptions">
+        {activity.options.map((option: any, index: number) => (
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            key={index}
+          >
+            {option.text}
+          </button>
+        ))}
+      </div>
+
       {activity.audio && <AudioDiv activity={activity} />}
     </>
   );
 }
 
-export default ReadType;
+export default QuizType;

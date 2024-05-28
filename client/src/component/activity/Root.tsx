@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import SelectActivityType from "./SelectActivityType";
 import { useParams } from "react-router-dom";
 import api from "../../authentication/api";
-import "../../css/activityRoot.css";
+import "../../css/activity.css";
 
 function ActivityRoot() {
   const [isLoading, setIsLoading] = useState(true);
@@ -47,7 +47,7 @@ function ActivityRoot() {
   return (
     <div className="activityRoot container">
       {activities && (
-        <div className="activityWrapper p-3 mb-2 bg-success-subtle text-success-emphasis">
+        <div className="activityWrapper">
           <SelectActivityType activity={activities[index]} />
         </div>
       )}
