@@ -9,40 +9,49 @@
 
 .activityRoot {
   width: 100%;
+  height: 90vh;
 }
 
 .activityWrapper {
   width: 100%;
+  height: 100%;
   display: flex;
   position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
+.activityWrapper .ActivityContent {
+  width: 100%;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
 @media (max-width: 768px) {
-  .activityWrapper {
+  .ActivityContent {
+    height: auto;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
   }
 }
 
-.activityWrapper .ActivityContent {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-}
 /* HEADER */
 
 .activityWrapper .activityHeader {
-  width: 40vw;
+  width: 30vw;
   background-color: rgb(5, 100, 76);
   color: white;
   border-radius: 10px;
   padding: 10px;
+}
+
+@media (max-width: 768px) {
+  .activityWrapper .activityHeader {
+    width: 100%;
+  }
 }
 
 /* MEDIA */
@@ -50,14 +59,14 @@
 .activityWrapper .mediaBox {
   margin: 3px;
   position: relative;
-  width: 40vw;
-  height: 60vh;
+  width: 30vw;
+  height: 50vh;
 }
 
 @media (max-width: 768px) {
   .activityWrapper .mediaBox {
-    width: 90vw;
-    height: 90vh;
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -74,13 +83,27 @@
   border-radius: 8px;
   border: 10px solid rgb(23, 105, 33);
 }
+@media (max-width: 768px) {
+  .activityWrapper img {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    border: 10px solid rgb(23, 105, 33);
+  }
 
+  .activityWrapper iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    border: 10px solid rgb(23, 105, 33);
+  }
+}
 /* TEXT */
 .activityWrapper .activityText {
   position: relative;
   float: right;
   width: 40vw;
-  height: 60vh;
+  height: 50vh;
   margin: 3px;
   background-color: rgb(23, 105, 33);
   color: white;
@@ -91,8 +114,8 @@
 
 @media (max-width: 768px) {
   .activityWrapper .activityText {
-    width: 90vw;
-    height: 90vh;
+    width: 100%;
+    height: auto;
   }
 }
 
@@ -125,11 +148,11 @@
 /* AUDIO */
 .activityWrapper .AudioDiv {
   margin: 3px;
-  /* position: fixed;
-  bottom: 50px; */
+  left: 50%;
 }
 
 /* QUIZ */
+
 .activityWrapper .quizOptions {
   position: relative;
   flex-direction: row;
@@ -138,11 +161,33 @@
 
 .activityWrapper .quizOptions button {
   margin: 2px;
-  width: 200px;
+  width: auto;
+  min-width: 200px;
 }
 
 /* FOOTER */
 .activityFooter {
   position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
   bottom: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.activityFooter button {
+  width: 200px;
+  height: 40px;
+  background-color: rgb(23, 23, 94);
+  color: rgb(255, 255, 255);
+  border-radius: 10px;
+  margin: 30px;
+}
+
+.activityFooter button:hover {
+  width: 210px;
+  height: 42px;
+  background-color: rgb(6, 6, 55);
 }
