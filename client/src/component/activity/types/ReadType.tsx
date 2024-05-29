@@ -3,23 +3,26 @@ import TextDiv from "./div/TextDiv";
 import TableDiv from "./div/TableDiv";
 import AudioDiv from "./div/AudioDiv";
 import HeaderDiv from "./div/HeaderDiv";
+import { ActivityContext } from "../activityContext";
+import { useContext } from "react";
 
-function ReadType(props: any) {
-  const { activity } = props;
+function ReadType() {
+  const { activity, setIsAnswered } = useContext(ActivityContext);
   const hascontent = activity.hasMedia || activity.text || activity.table;
+  setIsAnswered(true);
 
   return (
     <>
-      {activity.header && <HeaderDiv activity={activity} />}
+      {activity.header && <HeaderDiv />}
 
       {hascontent && (
         <div className="ActivityContent">
-          {activity.hasMedia && <MediaBox activity={activity} />}
-          {activity.text && <TextDiv activity={activity} />}
-          {activity.table && <TableDiv activity={activity} />}
+          {activity.hasMedia && <MediaBox />}
+          {activity.text && <TextDiv />}
+          {activity.table && <TableDiv />}
         </div>
       )}
-      {activity.audio && <AudioDiv activity={activity} />}
+      {activity.audio && <AudioDiv />}
     </>
   );
 }

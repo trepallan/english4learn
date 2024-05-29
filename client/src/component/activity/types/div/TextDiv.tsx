@@ -1,7 +1,10 @@
 import ReactMarkdown from "react-markdown";
+import { ActivityContext } from "../../activityContext";
+import { useContext } from "react";
 
-function textDiv(props: any) {
-  const { activity } = props;
+function TextDiv() {
+  const { activity } = useContext(ActivityContext);
+
   return (
     <>
       <div className="activityText">
@@ -11,4 +14,4 @@ function textDiv(props: any) {
   );
 }
 
-export default textDiv;
+export default TextDiv;

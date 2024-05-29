@@ -1,8 +1,10 @@
 import ReadType from "./types/ReadType";
 import QuizType from "./types/QuizType";
+import { ActivityContext } from "./activityContext";
+import { useContext } from "react";
 
-function SelectActivityType(props: any) {
-  const { activity, score, setIsAnswered } = props;
+function SelectActivityType() {
+  const { activity } = useContext(ActivityContext);
 
   switch (activity.type) {
     case "concentration":
@@ -10,16 +12,9 @@ function SelectActivityType(props: any) {
     case "mutioption":
       return <div>SelectActivityType</div>;
     case "quiz":
-      return (
-        <QuizType
-          activity={activity}
-          score={score}
-          setIsAnswered={setIsAnswered}
-        />
-      );
+      return <QuizType />;
     case "read":
-      setIsAnswered(true);
-      return <ReadType activity={activity} />;
+      return <ReadType />;
     case "pronunciation":
       return <div>SelectActivityType</div>;
     case "spelling":

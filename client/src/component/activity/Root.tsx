@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import SelectActivityType from "./SelectActivityType";
 import { useParams } from "react-router-dom";
 import api from "../../authentication/api";
+import { ActivityContextProvider } from "./activityContext";
 import "../../css/activity.css";
 
 interface score {
@@ -18,15 +19,6 @@ function ActivityRoot() {
   const themeId = useParams().themeId;
   if (!themeId) setMessage("Something went wrong");
   const score = useRef<score>({ correct: 0, total: 0 }); //Track user score
-
-  useEffect(() => {
-    if (!isAnswered) {
-      const optionButtons = document.querySelectorAll(".option");
-      optionButtons.forEach((button: any) => {
-        button.classList = "btn btn-outline-dark option";
-      });
-    }
-  }, [isAnswered]);
 
   if (isAnswered)
     document.querySelector(".activityFooter")?.classList.remove("hidden");
@@ -68,13 +60,16 @@ function ActivityRoot() {
   return (
     <div className="activityRoot container">
       {activities && (
-        <div className="activityWrapper">
-          <SelectActivityType
-            activity={activities[index]}
-            score={score}
-            setIsAnswered={setIsAnswered}
-          />
-        </div>
+        <ActivityContextProvider
+          isAnswered={isAnswered}
+          setIsAnswered={setIsAnswered}
+          score={score}
+          activity={activities[index]}
+        >
+          <div className="activityWrapper">
+            <SelectActivityType />
+          </div>
+        </ActivityContextProvider>
       )}
 
       <div className="activityFooter hidden">

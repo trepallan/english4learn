@@ -2,10 +2,28 @@ import MediaBox from "./div/MediaBox";
 import TextDiv from "./div/TextDiv";
 import TableDiv from "./div/TableDiv";
 import AudioDiv from "./div/AudioDiv";
+import ReactMarkdown from "react-markdown";
+import { useState, useEffect } from "react";
+import { ActivityContext } from "../activityContext";
+import { useContext } from "react";
 
-function QuizType(props: any) {
-  const { activity, score, setIsAnswered } = props;
+function QuizType() {
+  const { activity, score, setIsAnswered, isAnswered } =
+    useContext(ActivityContext);
   const hascontent = activity.hasMedia || activity.text || activity.table;
+  const [answer, setAnswer] = useState("");
+
+  useEffect(() => {
+    if (!isAnswered) {
+      const optionButtons = document.querySelectorAll(".option");
+      optionButtons.forEach((button: any) => {
+        button.classList = "btn btn-outline-dark option";
+      });
+      document.querySelector(".correctanswer")?.classList.add("hidden");
+      document.querySelector(".wronganswer")?.classList.add("hidden");
+      setAnswer("");
+    }
+  }, [isAnswered]);
 
   function checkAnswer(event: any) {
     event.preventDefault();
@@ -17,6 +35,7 @@ function QuizType(props: any) {
 
     if (event.target.value === "true") {
       event.target.classList = "btn btn-success disabled option";
+      document.querySelector(".correctanswer")?.classList.remove("hidden");
 
       score.current.correct += 1;
       score.current.total += 1;
@@ -26,11 +45,11 @@ function QuizType(props: any) {
       allButtons.forEach((button: any) => {
         if (button.value === "true") {
           button.classList = "btn btn-success disabled option";
+          setAnswer(button.innerText);
+          document.querySelector(".wronganswer")?.classList.remove("hidden");
         }
       });
     }
-
-    console.log(score);
     setIsAnswered(true);
   }
 
@@ -39,14 +58,18 @@ function QuizType(props: any) {
     <>
       {hascontent && (
         <div className="ActivityContent">
-          {activity.hasMedia && <MediaBox activity={activity} />}
-          {activity.text && <TextDiv activity={activity} />}
-          {activity.table && <TableDiv activity={activity} />}
+          {activity.hasMedia && <MediaBox />}
+          {activity.text && <TextDiv />}
+          {activity.table && <TableDiv />}
         </div>
       )}
 
       <div className="activityQuiz">
-        {activity.header && <h6>{activity.header}</h6>}
+        {activity.header && (
+          <h6>
+            <ReactMarkdown>{activity.header}</ReactMarkdown>
+          </h6>
+        )}
         <div className="quizOptions">
           {activity.options.map((option: any, index: number) => (
             <button
@@ -61,7 +84,20 @@ function QuizType(props: any) {
           ))}
         </div>
 
-        {activity.audio && <AudioDiv activity={activity} />}
+        {activity.audio && <AudioDiv />}
+        <div className="hidden correctanswer">
+          <div className="alert alert-success d-flex align-items-center">
+            <div className="text-success">Correct!</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="hidden wronganswer">
+        <div className="alert alert-danger d-flex align-items-center hidden">
+          <div className="text-danger">
+            Wrong! Answer is <strong>{answer}</strong>
+          </div>
+        </div>
       </div>
     </>
   );

@@ -1,7 +1,9 @@
 import ReactMarkdown from "react-markdown";
+import { ActivityContext } from "../../activityContext";
+import { useContext } from "react";
 
-function HeaderDiv(props: any) {
-  const { activity } = props;
+function HeaderDiv() {
+  const { activity } = useContext(ActivityContext);
   return (
     <>
       <div className="activityHeader">

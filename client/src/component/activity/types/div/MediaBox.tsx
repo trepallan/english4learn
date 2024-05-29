@@ -1,5 +1,8 @@
-function MediaBox(props: any) {
-  const { activity } = props;
+import { ActivityContext } from "../../activityContext";
+import { useContext } from "react";
+
+function MediaBox() {
+  const { activity } = useContext(ActivityContext);
 
   if (activity.hasMedia === "video") {
     return (
@@ -10,7 +13,7 @@ function MediaBox(props: any) {
   }
   return (
     <div className="mediaBox">
-      <img src={"/images/" + activity.media} />
+      <img src={"/images/" + activity.media} alt="media" />
     </div>
   );
 }
