@@ -117,7 +117,7 @@ function SpellingTyte() {
                   {guess[index] ? (
                     <span className={className}>{guess[index]}</span>
                   ) : (
-                    <span>_ </span>
+                    <span>&#9824;</span>
                   )}
                 </strong>
               );
@@ -132,6 +132,7 @@ function SpellingTyte() {
           type="text"
           onChange={updateGuess}
           className="form-control spellingInput"
+          placeholder="Spell it!"
           autoComplete="off"
           value={guess}
         />

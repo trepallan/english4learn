@@ -8,26 +8,23 @@ import { ActivityContext } from "../activityContext";
 import { useContext } from "react";
 
 function QuizType() {
-  const { activity, score, setIsAnswered, isAnswered } =
-    useContext(ActivityContext);
+  const { activity, score, setIsAnswered } = useContext(ActivityContext);
   const [hascontent, setHascontent] = useState(false);
   const [answer, setAnswer] = useState("");
 
   useEffect(() => {
     setHascontent(activity.hasMedia || activity.text || activity.table);
-  }, [activity]);
-
-  useEffect(() => {
-    if (!isAnswered) {
-      const optionButtons = document.querySelectorAll(".option");
-      optionButtons.forEach((button: any) => {
-        button.classList = "btn btn-outline-dark option";
-      });
-      document.querySelector(".correctanswer")?.classList.add("hidden");
-      document.querySelector(".wronganswer")?.classList.add("hidden");
-      setAnswer("");
-    }
-  }, [isAnswered]);
+    const optionButtons = document.querySelectorAll(".option");
+    optionButtons.forEach((button: any) => {
+      button.classList = "btn btn-outline-dark option";
+    });
+    document.querySelector(".correctanswer")?.classList.add("hidden");
+    document.querySelector(".wronganswer")?.classList.add("hidden");
+    setAnswer("");
+    return () => {
+      setIsAnswered(false);
+    };
+  }, [activity, setIsAnswered]);
 
   function checkAnswer(event: any) {
     event.preventDefault();

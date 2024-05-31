@@ -3,7 +3,7 @@ import ProtectedRoutes from "./ProtectRoutes/RoutesProtect";
 import Home from "../component/Home";
 import Auth from "../component/authorization/Auth";
 import NavBar from "../component/navBar/NavBar";
-import SelectCourseRoute from "../component/selectCourse/ActivityRoutes";
+import SelectCourseRoute from "../component/selectCourse/CourseRoutes";
 import ActivityRoot from "../component/activity/Root";
 
 function AppRouter() {

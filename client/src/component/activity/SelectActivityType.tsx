@@ -3,6 +3,7 @@ import QuizType from "./types/QuizType";
 import Multioption from "./types/Multioption";
 import Concentration from "./types/Concentration";
 import SpellingTyte from "./types/SpellingType";
+import SelectImage from "./types/SelectImage";
 import { ActivityContext } from "./activityContext";
 import { useContext } from "react";
 
@@ -23,7 +24,7 @@ function SelectActivityType() {
     case "spelling":
       return <SpellingTyte />;
     case "selectImage":
-      return <div>SelectActivityType</div>;
+      return <SelectImage />;
     default:
       return <div> Something went wrong </div>;
   }

@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (event.key === "Enter") {
       const footer = document.querySelector(".activityFooter");
       const NextButton = document.querySelector<any>(".NextButton");
-      if (!footer?.hasAttribute("disabled")) {
+      if (!footer?.classList.contains("disabled")) {
         NextButton?.click();
       }
     }
@@ -26,6 +26,7 @@ function ActivityRoot() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAnswered, setIsAnswered] = useState(false);
   const [activities, setActivities] = useState([]);
+  const [activity, setActivity] = useState({});
   const [message, setMessage] = useState("");
   const [index, setIndex] = useState(0);
   const themeId = useParams().themeId;
@@ -41,7 +42,11 @@ function ActivityRoot() {
       activityFooter?.classList.add("hidden");
       activityFooter?.classList.add("disabled");
     }
-  }, [isAnswered]);
+  }, [isAnswered, activity]);
+
+  useEffect(() => {
+    setActivity(activities[index]);
+  }, [activities, index]);
 
   function handleNext() {
     setIsAnswered(false);
@@ -78,12 +83,15 @@ function ActivityRoot() {
   // Display activities
   return (
     <div className="activityRoot container">
-      {activities && (
+      <div className="activityHeader">
+        {index + 1} / {activities.length}
+      </div>
+      {activity && (
         <ActivityContextProvider
           isAnswered={isAnswered}
           setIsAnswered={setIsAnswered}
           score={score}
-          activity={activities[index]}
+          activity={activity}
         >
           <div className="activityWrapper">
             <SelectActivityType />
@@ -91,7 +99,7 @@ function ActivityRoot() {
         </ActivityContextProvider>
       )}
 
-      <div className="activityFooter hidden">
+      <div className="activityFooter">
         <button onClick={handleNext} className="NextButton">
           Next
         </button>
