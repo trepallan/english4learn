@@ -10,6 +10,18 @@ interface score {
   total: number;
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      const footer = document.querySelector(".activityFooter");
+      const NextButton = document.querySelector<any>(".NextButton");
+      if (!footer?.hasAttribute("disabled")) {
+        NextButton?.click();
+      }
+    }
+  });
+});
+
 function ActivityRoot() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAnswered, setIsAnswered] = useState(false);
@@ -20,9 +32,16 @@ function ActivityRoot() {
   if (!themeId) setMessage("Something went wrong");
   const score = useRef<score>({ correct: 0, total: 0 }); //Track user score
 
-  if (isAnswered)
-    document.querySelector(".activityFooter")?.classList.remove("hidden");
-  else document.querySelector(".activityFooter")?.classList.add("hidden");
+  useEffect(() => {
+    const activityFooter = document.querySelector(".activityFooter");
+    if (isAnswered) {
+      activityFooter?.classList.remove("hidden");
+      activityFooter?.classList.remove("disabled");
+    } else {
+      activityFooter?.classList.add("hidden");
+      activityFooter?.classList.add("disabled");
+    }
+  }, [isAnswered]);
 
   function handleNext() {
     setIsAnswered(false);
@@ -73,7 +92,9 @@ function ActivityRoot() {
       )}
 
       <div className="activityFooter hidden">
-        <button onClick={handleNext}>Next</button>
+        <button onClick={handleNext} className="NextButton">
+          Next
+        </button>
       </div>
     </div>
   );

@@ -21,7 +21,6 @@ const activitySchema = new mongoose.Schema({
       "read",
       "pronunciation",
       "spelling",
-      "listen",
       "vocabulary",
       "selectImage",
     ],
@@ -83,6 +82,11 @@ const activitySchema = new mongoose.Schema({
       value: {
         type: String,
         required: false,
+      },
+      IsImage: {
+        type: Boolean,
+        required: true,
+        default: false,
       },
     },
   ],

@@ -1,18 +1,13 @@
 import MarkdownIt from "markdown-it";
+import { ActivityContext } from "../../activityContext";
+import { useContext } from "react";
 
 const md = new MarkdownIt({ html: true });
 
-const html =
-  "| Singular |    | Plural  |     |    |     |\n" +
-  "| ---------- | ------- | ---------- | -------- | ------- | --------- |\n" +
-  "| I    | am  | a student. | We  | are | students. |\n" +
-  "| You   | are | You   | are  |    |     |\n" +
-  "| He She | is  | They  | are  |    |     |\n" +
-  "| It   | is  | a pencil. | They | are | pencils. |";
+function TableDiv() {
+  const { activity } = useContext(ActivityContext);
+  const markdown = md.render(activity.table);
 
-const markdown = md.render(html);
-
-function TableDiv(props: any) {
   return (
     <>
       <div

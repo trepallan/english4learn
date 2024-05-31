@@ -10,8 +10,12 @@ import { useContext } from "react";
 function QuizType() {
   const { activity, score, setIsAnswered, isAnswered } =
     useContext(ActivityContext);
-  const hascontent = activity.hasMedia || activity.text || activity.table;
+  const [hascontent, setHascontent] = useState(false);
   const [answer, setAnswer] = useState("");
+
+  useEffect(() => {
+    setHascontent(activity.hasMedia || activity.text || activity.table);
+  }, [activity]);
 
   useEffect(() => {
     if (!isAnswered) {
@@ -53,7 +57,6 @@ function QuizType() {
     setIsAnswered(true);
   }
 
-  console.log(activity);
   return (
     <>
       {hascontent && (
@@ -85,17 +88,20 @@ function QuizType() {
         </div>
 
         {activity.audio && <AudioDiv />}
-        <div className="hidden correctanswer">
-          <div className="alert alert-success d-flex align-items-center">
-            <div className="text-success">Correct!</div>
+      </div>
+
+      <div className="hidden correctanswer">
+        <div className="alert alert-success d-flex align-items-center">
+          <div className="text-success">
+            <strong>Correct answer!</strong>
           </div>
         </div>
       </div>
 
       <div className="hidden wronganswer">
-        <div className="alert alert-danger d-flex align-items-center hidden">
+        <div className="alert alert-danger d-flex align-items-center">
           <div className="text-danger">
-            Wrong! Answer is <strong>{answer}</strong>
+            Wrong answer! The correct answer is <strong>{answer}</strong>
           </div>
         </div>
       </div>

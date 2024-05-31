@@ -1,5 +1,8 @@
 import ReadType from "./types/ReadType";
 import QuizType from "./types/QuizType";
+import Multioption from "./types/Multioption";
+import Concentration from "./types/Concentration";
+import SpellingTyte from "./types/SpellingType";
 import { ActivityContext } from "./activityContext";
 import { useContext } from "react";
 
@@ -8,9 +11,9 @@ function SelectActivityType() {
 
   switch (activity.type) {
     case "concentration":
-      return <div>SelectActivityType</div>;
-    case "mutioption":
-      return <div>SelectActivityType</div>;
+      return <Concentration />;
+    case "mutioption": // TODO change to Multioption
+      return <Multioption />;
     case "quiz":
       return <QuizType />;
     case "read":
@@ -18,15 +21,11 @@ function SelectActivityType() {
     case "pronunciation":
       return <div>SelectActivityType</div>;
     case "spelling":
-      return <div>SelectActivityType</div>;
-    case "listen":
-      return <div>SelectActivityType</div>;
-    case "vocabulary":
-      return <div>SelectActivityType</div>;
+      return <SpellingTyte />;
     case "selectImage":
       return <div>SelectActivityType</div>;
     default:
-      return <div>SelectActivityType</div>;
+      return <div> Something went wrong </div>;
   }
 }
 
