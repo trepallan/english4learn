@@ -5,7 +5,6 @@ import AudioDiv from "./div/AudioDiv";
 import HeaderDiv from "./div/HeaderDiv";
 import { ActivityContext } from "../activityContext";
 import { useContext, useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
 import recordIcon from "../../../icons/mic.svg";
 import recordingIcon from "../../../icons/stop-fill (1).svg";
 
@@ -17,65 +16,62 @@ function PronunciationActivityComponent() {
     setHascontent(activity.hasMedia || activity.text || activity.table);
   }, [activity, setIsAnswered]);
 
-  const record = document.querySelector<any>(".record");
-  const stop = document.querySelector<any>(".stop");
-  const soundClips = document.querySelector<any>(".sound-clips");
+  useEffect(() => {
+    const record = document.querySelector<any>(".record");
+    const stop = document.querySelector<any>(".stop");
+    const soundClips = document.querySelector<any>(".sound-clips");
 
-  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    console.log("getUserMedia supported.");
-    navigator.mediaDevices
-      .getUserMedia(
-        // constraints - only audio needed for this app
-        {
-          audio: true,
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      (async () => {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia(
+            // constraints - only audio needed for this app
+            {
+              audio: true,
+            }
+          );
+
+          // Success callback
+          const mediaRecorder = new MediaRecorder(stream);
+
+          record.onclick = () => {
+            mediaRecorder.start();
+            record.classList.add("hidden");
+            stop.classList.remove("hidden");
+          };
+
+          let chunks: any[] = [];
+          mediaRecorder.ondataavailable = (e) => {
+            chunks.push(e.data);
+          };
+
+          stop.onclick = () => {
+            mediaRecorder.stop();
+            record.classList.remove("hidden");
+            stop.classList.add("hidden");
+          };
+
+          mediaRecorder.onstop = async (e) => {
+            const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
+            // Append the chunks to the end of the audioFile
+            const url = URL.createObjectURL(blob);
+            const audio = new Audio(url);
+            audio.controls = true;
+            audio.autoplay = false;
+
+            chunks = []; // clear chunks
+            soundClips.innerHTML = "";
+            soundClips.appendChild(audio);
+            setIsAnswered(true);
+          };
+        } catch (error) {
+          console.log(error);
         }
-      )
-
-      // Success callback
-      .then((stream) => {
-        const mediaRecorder = new MediaRecorder(stream);
-
-        record.onclick = () => {
-          mediaRecorder.start();
-          console.log(mediaRecorder.state);
-          console.log("recorder started");
-          record.classList.add("hidden");
-          stop.classList.remove("hidden");
-        };
-
-        let chunks: any[] = [];
-
-        mediaRecorder.ondataavailable = (e) => {
-          chunks.push(e.data);
-        };
-
-        stop.onclick = () => {
-          mediaRecorder.stop();
-          record.classList.remove("hidden");
-          stop.classList.add("hidden");
-        };
-
-        mediaRecorder.onstop = (e) => {
-          console.log(mediaRecorder.state);
-          console.log("recorder stopped");
-          const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
-          const audioUrl = URL.createObjectURL(blob);
-          const audio = new Audio(audioUrl);
-          audio.controls = true;
-          audio.autoplay = false;
-          soundClips.innerHTML = "";
-          soundClips.appendChild(audio);
-          setIsAnswered(true);
-        };
-      })
-
-      // Error callback
-      .catch((err) => {
-        console.error(`The following getUserMedia error occurred: ${err}`);
-      });
-  } else {
-    console.log("getUserMedia not supported on your browser!");
-  }
+      })();
+    } else {
+      console.log("getUserMedia not supported on your browser!");
+    }
+  }, [setIsAnswered]);
 
   return (
     <>
@@ -94,9 +90,6 @@ function PronunciationActivityComponent() {
       </div>
 
       <div className="pronunciation">
-        <h6>
-          <ReactMarkdown>{activity.header}</ReactMarkdown>
-        </h6>
         <div className="pronunciation-buttons">
           <button className="record">
             <img src={recordIcon} alt="" />

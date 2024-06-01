@@ -26,7 +26,7 @@ function ActivityRoot() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAnswered, setIsAnswered] = useState(false);
   const [activities, setActivities] = useState([]);
-  const [activity, setActivity] = useState({});
+  const [activity, setActivity] = useState<any>({});
   const [message, setMessage] = useState("");
   const [index, setIndex] = useState(0);
   const themeId = useParams().themeId;
@@ -48,9 +48,16 @@ function ActivityRoot() {
     setActivity(activities[index]);
   }, [activities, index]);
 
-  function handleNext() {
+  async function handleNext() {
     setIsAnswered(false);
-    if (index + 1 >= activities.length) setMessage("No more activities"); // TODO: display user score
+    if (index + 1 >= activities.length) {
+      let percentage = (score.current.correct / score.current.total) * 100;
+      if (Number.isNaN(percentage)) percentage = 100;
+      const response = await api.post(`/activities/mark_as_done/${themeId}`, {
+        percentage,
+      });
+      console.log(response);
+    } // TODO: display user score
     setIndex((prevIndex) => (prevIndex + 1) % activities.length);
   }
 
