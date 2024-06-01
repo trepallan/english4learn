@@ -7,8 +7,10 @@ import "dotenv/config";
 
 // Conect to MongoDB
 (async function connect() {
+  const MONGODB_URL = process.env.MONGODB_URL;
+  if (!MONGODB_URL) throw new Error(" cannot get mongodb url from environment");
   try {
-    await mongoose.connect(process.env.MONGODB_URL as string);
+    await mongoose.connect(MONGODB_URL);
     console.log("Connected to MongoDB");
   } catch (error) {
     console.log(error);
@@ -16,8 +18,10 @@ import "dotenv/config";
 })();
 
 // Create Express server
+const CLIENT_URL = process.env.CLIENT_URL;
+if (!CLIENT_URL) throw new Error(" cannot get client url from environment");
 const corsOptions = {
-  origin: process.env.CLIENT_URL as string,
+  origin: CLIENT_URL,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
@@ -29,6 +33,7 @@ startup(app);
 
 // Start Express server
 const server = http.createServer(app);
+const SERVER_PORT = process.env.PORT;
 server.listen(process.env.PORT, () => {
-  console.log(`Server started on port ${process.env.PORT}`);
+  console.log(`Server started on port ${SERVER_PORT}`);
 });
