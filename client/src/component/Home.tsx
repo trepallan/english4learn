@@ -1,10 +1,6 @@
-import { useState, useEffect } from "react";
 import "../css/Home.css";
 
 function Home() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {});
   return (
     <div className="container Home">
       <h1>Welcome to english4learn</h1>

@@ -44,16 +44,16 @@ function SpellingTyte() {
         ?.setAttribute("disabled", "disabled");
       document.querySelector(".correctanswer")?.classList.remove("hidden");
     } else {
-      let mistakes = 0;
+      let ignoredMistakes = false;
       let hasWorngChar = false;
       currentGuess.split("").forEach((letter: string, index: number) => {
         if (answer[index] !== letter) {
           hasWorngChar = true;
-          mistakes++;
+          if (index !== currentGuess.length - 1) ignoredMistakes = true;
         }
       });
 
-      if (mistakes > 1) {
+      if (ignoredMistakes) {
         setHasMistake(true);
         return;
       } else {
@@ -110,7 +110,11 @@ function SpellingTyte() {
             } else {
               // Determine the class name based on the letter match
               const className =
-                guess[index] === answer[index] ? "text-success" : "text-danger";
+                guess[index] === answer[index]
+                  ? "text-success"
+                  : hasMisatake
+                  ? "inputhasmistake"
+                  : "text-danger";
 
               return (
                 <strong key={index}>
@@ -134,6 +138,7 @@ function SpellingTyte() {
           className="form-control spellingInput"
           placeholder="Spell it!"
           autoComplete="off"
+          maxLength={hasMisatake ? guess.length : answer.length}
           value={guess}
         />
         <hr />

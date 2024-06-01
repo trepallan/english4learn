@@ -6,25 +6,25 @@ import SpellingTyte from "./types/SpellingType";
 import SelectImage from "./types/SelectImage";
 import { ActivityContext } from "./activityContext";
 import { useContext } from "react";
+import PronunciationActivity from "./types/Pronunciation";
 
 function SelectActivityType() {
   const { activity } = useContext(ActivityContext);
-
   switch (activity.type) {
     case "concentration":
-      return <Concentration />;
+      return <Concentration key={activity._id} />;
     case "mutioption": // TODO change to Multioption
-      return <Multioption />;
+      return <Multioption key={activity._id} />;
     case "quiz":
-      return <QuizType />;
+      return <QuizType key={activity._id} />;
     case "read":
-      return <ReadType />;
+      return <ReadType key={activity._id} />;
     case "pronunciation":
-      return <div>SelectActivityType</div>;
+      return <PronunciationActivity key={activity._id} />;
     case "spelling":
-      return <SpellingTyte />;
+      return <SpellingTyte key={activity._id} />;
     case "selectImage":
-      return <SelectImage />;
+      return <SelectImage key={activity._id} />;
     default:
       return <div> Something went wrong </div>;
   }

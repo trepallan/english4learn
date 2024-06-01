@@ -80,7 +80,6 @@
 .activityWrapper .mediaBox {
   margin: 3px;
   position: relative;
-  width: 30vw;
   height: 50vh;
 }
 
@@ -91,28 +90,28 @@
   }
 }
 
-.activityWrapper iframe {
-  width: 100%;
+.activityWrapper .mediaBox iframe {
+  width: 470px;
   height: 100%;
   border-radius: 8px;
   border: 10px solid rgb(23, 105, 33);
 }
 
-.activityWrapper img {
+.activityWrapper .mediaBox img {
   width: 100%;
   height: 100%;
   border-radius: 8px;
   border: 10px solid rgb(23, 105, 33);
 }
 @media (max-width: 768px) {
-  .activityWrapper img {
+  .activityWrapper .mediaBox img {
     width: 100%;
     height: 100%;
     border-radius: 8px;
     border: 10px solid rgb(23, 105, 33);
   }
 
-  .activityWrapper iframe {
+  .activityWrapper .mediaBox iframe {
     width: 100%;
     border-radius: 8px;
     border: 10px solid rgb(23, 105, 33);
@@ -217,6 +216,35 @@
   font-size: 20px;
 }
 
+@keyframes wronganspell {
+  0% {
+    color: white;
+  }
+  20% {
+    color: black;
+  }
+  40% {
+    color: white;
+  }
+  60% {
+    color: black;
+  }
+  80% {
+    color: white;
+  }
+  100% {
+    color: black;
+  }
+}
+
+.inputhasmistake {
+  animation-name: wronganspell;
+  animation-duration: 1.5s;
+  color: red;
+  /* animation-iteration-count: infinite; */
+  animation-timing-function: ease-in-out;
+}
+
 .blankspot {
   display: inline-block;
   width: 10px; /* Adjust width as needed */
@@ -235,12 +263,10 @@
 
 .figure img {
   cursor: pointer;
+  border: 9px solid rgb(1, 3, 1);
 }
 
 .figure img:not(.selected):hover {
-  border: 4px solid rgb(1, 3, 1);
-}
-.figure .selected {
   border: 4px solid rgb(1, 3, 1);
 }
 
@@ -255,11 +281,45 @@
   cursor: default;
 }
 
+/* PRONUNCIATION */
+
+.sound-clips {
+  background-color: rgb(239, 231, 231);
+  border-radius: 10px;
+}
+
+.pronunciationAudios {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+
+.record {
+  margin: 2px;
+  background-color: rgb(102, 49, 166);
+  border-radius: 20px;
+  width: 100px;
+}
+
+.record:hover {
+  background-color: rgb(74, 29, 129);
+}
+
+.stop {
+  margin: 2px;
+  background-color: rgb(207, 3, 3);
+  border-radius: 20px;
+  width: 100px;
+}
+
+.stop:hover {
+  background-color: rgb(129, 4, 4);
+}
+
 /* FOOTER */
 .activityFooter {
   position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 30px;
   bottom: 0;
 }
 
