@@ -6,13 +6,14 @@ function TextDiv() {
   const { activity } = useContext(ActivityContext);
   const html: any = decode(activity.text);
 
-  // Unescape the HTML entities
+  // Chck if there is a media to change css
+
+  const Class = activity.hasMedia
+    ? "activityTextWithMedia activityText"
+    : "activityText";
 
   return (
-    <div
-      className="activityText"
-      dangerouslySetInnerHTML={{ __html: html }}
-    ></div>
+    <div className={Class} dangerouslySetInnerHTML={{ __html: html }}></div>
   );
 }
 

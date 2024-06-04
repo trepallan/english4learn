@@ -1,14 +1,14 @@
 import { ActivityContext } from "../../activityContext";
 import { useContext } from "react";
-import he from "he";
+import decode from "./decode";
 
 function HeaderDiv() {
   const { activity } = useContext(ActivityContext);
-  const html = he.decode(activity.header);
+  const html = decode(activity.header);
   return (
     <>
       <div className="activityHeader">
-        <h4 dangerouslySetInnerHTML={{ __html: html }}></h4>
+        <h2 dangerouslySetInnerHTML={{ __html: html }}></h2>
       </div>
     </>
   );

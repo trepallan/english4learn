@@ -2,7 +2,7 @@ import MediaBox from "./div/MediaBox";
 import TextDiv from "./div/TextDiv";
 import TableDiv from "./div/TableDiv";
 import AudioDiv from "./div/AudioDiv";
-import he from "he";
+import decode from "./div/decode";
 import { useState, useEffect } from "react";
 import { ActivityContext } from "../activityContext";
 import { useContext } from "react";
@@ -68,7 +68,7 @@ function QuizType() {
         {activity.header && (
           <h6>
             <span
-              dangerouslySetInnerHTML={{ __html: he.decode(activity.header) }}
+              dangerouslySetInnerHTML={{ __html: decode(activity.header) }}
             ></span>
           </h6>
         )}

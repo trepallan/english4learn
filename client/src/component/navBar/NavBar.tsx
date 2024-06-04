@@ -14,7 +14,7 @@ function NavBar() {
     >
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
-          english4learn
+          english4learn &#x262F;
         </a>
 
         {isLogged ? (

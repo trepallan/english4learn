@@ -14,7 +14,12 @@ function Table(props: any) {
         {data.map((d: any) => (
           <tr key={d._id}>
             <th scope="row">{d.index}</th>
-            <td>{d.name}</td>
+            <td
+              onClick={() => (window.location.href = aTagLink + d._id)}
+              style={{ cursor: "pointer" }}
+            >
+              {d.name}
+            </td>
             <td>
               <p>{d[`${children.toLowerCase()}_count`]}</p>
             </td>

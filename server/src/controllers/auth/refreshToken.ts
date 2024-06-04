@@ -12,7 +12,7 @@ async function refreshToken(req: any, res: any) {
     jwt.verify(
       refreshToken,
       process.env.JWT_SECRET as string,
-      (err: any, decoded: any) => {
+      async (err: any, decoded: any) => {
         if (err) {
           return res.status(401).json({ message: "expired refresh token" });
         }
@@ -22,7 +22,7 @@ async function refreshToken(req: any, res: any) {
           return res.status(401).json({ message: "expired refresh token" });
         }
 
-        const user = UserModel.findById(decoded._id);
+        const user = await UserModel.findById(decoded._id);
         if (!user)
           return res.status(401).json({ message: "expired refresh token" });
 

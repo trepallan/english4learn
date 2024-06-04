@@ -117,9 +117,9 @@ function ActivityRoot() {
           theme={theme}
         >
           {/* Header */}
-          <div className="activityHeader">
+          <div className="ThemeHeader">
             <div className="BackButton">
-              <a href={"/select-course/theme/" + theme.lesson}>Back</a>
+              <a href={"/select-course/theme/" + theme.lesson}> &#8592; Back</a>
             </div>
             {theme.name} {index + 1} / {activities.length}
           </div>
@@ -133,7 +133,7 @@ function ActivityRoot() {
 
       <div className="activityFooter">
         <button onClick={handleNext} className="NextButton">
-          Next
+          Next &#8594;
         </button>
       </div>
     </div>
