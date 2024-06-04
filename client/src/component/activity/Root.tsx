@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import api from "../../authentication/api";
 import { ActivityContextProvider } from "./activityContext";
 import "../../css/activity.css";
+import LessonConcuded from "./comcludes/LessonConcuded";
 
 interface score {
   correct: number;
@@ -26,6 +27,7 @@ function ActivityRoot() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAnswered, setIsAnswered] = useState(false);
   const [activities, setActivities] = useState([]);
+  const [theme, setTheme] = useState<any>({});
   const [activity, setActivity] = useState<any>({});
   const [message, setMessage] = useState("");
   const [index, setIndex] = useState(0);
@@ -51,13 +53,28 @@ function ActivityRoot() {
   async function handleNext() {
     setIsAnswered(false);
     if (index + 1 >= activities.length) {
+      //  If last activity
       let percentage = (score.current.correct / score.current.total) * 100;
-      if (Number.isNaN(percentage)) percentage = 100;
+      if (Number.isNaN(percentage)) percentage = 100; //  If no score
       const response = await api.post(`/activities/mark_as_done/${themeId}`, {
         percentage,
       });
-      console.log(response);
-    } // TODO: display user score
+      if (response.status !== 200) return setMessage(response.message);
+      const hasNext = response.hasNext;
+      if (!hasNext) {
+        //  If lesson is finished
+        const lesson = response.lesson;
+        if (!lesson) return setMessage("Something went wrong");
+        return <LessonConcuded lesson={lesson} />;
+      }
+
+      //  If there is a next theme
+      const nextTheme = response.nextTheme;
+      if (!nextTheme) return setMessage("Something went wrong");
+      return window.location.replace(`/activities/${nextTheme._id}`);
+    }
+
+    //  If there is a next activity
     setIndex((prevIndex) => (prevIndex + 1) % activities.length);
   }
 
@@ -68,7 +85,8 @@ function ActivityRoot() {
       const response = await api.get(`/activities/${themeId}`);
       if (response.status !== 200) setMessage(response.message);
 
-      setActivities(response.data);
+      setActivities(response.activities);
+      setTheme(response.theme);
       setIsLoading(false);
     })();
   }, [themeId]);
@@ -90,16 +108,23 @@ function ActivityRoot() {
   // Display activities
   return (
     <div className="activityRoot container">
-      <div className="activityHeader">
-        {index + 1} / {activities.length}
-      </div>
       {activity && (
         <ActivityContextProvider
           isAnswered={isAnswered}
           setIsAnswered={setIsAnswered}
           score={score}
           activity={activity}
+          theme={theme}
         >
+          {/* Header */}
+          <div className="activityHeader">
+            <div className="BackButton">
+              <a href={"/select-course/theme/" + theme.lesson}>Back</a>
+            </div>
+            {theme.name} {index + 1} / {activities.length}
+          </div>
+
+          {/* Activity wrapper */}
           <div className="activityWrapper">
             <SelectActivityType />
           </div>

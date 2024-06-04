@@ -1,5 +1,5 @@
 import getActivities from "../controllers/Activities/getActivities";
-import markAsDone from "../controllers/Activities/markAsDone";
+import markAsDone from "../controllers/Activities/markAsDoneTheme";
 import markASDoneMD from "./middleware/markAsDone";
 import { Router } from "express";
 const router = Router();

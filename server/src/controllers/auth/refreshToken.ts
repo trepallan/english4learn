@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import UserModel from "../../../models/user";
 import "dotenv/config";
 
 async function refreshToken(req: any, res: any) {
@@ -20,6 +21,10 @@ async function refreshToken(req: any, res: any) {
         if (currentTime > decoded.exp) {
           return res.status(401).json({ message: "expired refresh token" });
         }
+
+        const user = UserModel.findById(decoded._id);
+        if (!user)
+          return res.status(401).json({ message: "expired refresh token" });
 
         const token = jwt.sign(
           { _id: decoded._id, username: decoded.username },

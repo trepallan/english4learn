@@ -13,7 +13,7 @@ function SelectActivityType() {
   switch (activity.type) {
     case "concentration":
       return <Concentration key={activity._id} />;
-    case "mutioption": // TODO change to Multioption
+    case "multioption":
       return <Multioption key={activity._id} />;
     case "quiz":
       return <QuizType key={activity._id} />;

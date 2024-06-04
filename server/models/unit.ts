@@ -10,6 +10,10 @@ const unitSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  path: {
+    type: String,
+    required: true,
+  },
   name: String,
   lesson_count: Number,
 });

@@ -19,7 +19,9 @@ function Table(props: any) {
               <p>{d[`${children.toLowerCase()}_count`]}</p>
             </td>
             <td>
-              <a href={`${aTagLink}${d._id}`}>
+              <a
+                href={`${aTagLink}${encodeURIComponent(d._id)}`} //ID & PATH
+              >
                 <button type="button" className="btn btn-outline-primary">
                   Select
                 </button>

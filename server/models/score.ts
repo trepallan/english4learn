@@ -14,18 +14,19 @@ const scoreSchema = new mongoose.Schema({
   unit: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Unit",
-    required: true,
   },
   lesson: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Lesson",
-    required: true,
   },
   theme: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Theme",
-    required: true,
   },
+  done: {
+    type: Number,
+    required: true,
+  }, //// Done and score are in % (0-100) ////
   score: {
     type: Number,
     required: true,

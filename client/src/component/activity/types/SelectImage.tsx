@@ -1,7 +1,7 @@
 import AudioDiv from "./div/AudioDiv";
 import { ActivityContext } from "../activityContext";
 import { useContext, useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
+import he from "he";
 
 function SelectImage() {
   const { activity, score, setIsAnswered } = useContext(ActivityContext);
@@ -43,7 +43,9 @@ function SelectImage() {
     <>
       {activity.header && (
         <h5>
-          <ReactMarkdown>{activity.header}</ReactMarkdown>
+          <span
+            dangerouslySetInnerHTML={{ __html: he.decode(activity.header) }}
+          ></span>
         </h5>
       )}
 

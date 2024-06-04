@@ -43,10 +43,6 @@ const activitySchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  table: {
-    type: String,
-    required: false,
-  },
   audio: {
     type: String,
     required: false,

@@ -11,7 +11,14 @@ const lessonSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  theme_count: Number,
+  path: {
+    type: String,
+    required: true,
+  },
+  theme_count: {
+    type: Number,
+    required: true,
+  },
 });
 
 export default mongoose.model("Lesson", lessonSchema);

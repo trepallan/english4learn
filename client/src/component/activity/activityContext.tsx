@@ -5,12 +5,13 @@ interface context {
   score: any;
   setIsAnswered: any;
   isAnswered: any;
+  theme: any;
 }
 
 export const ActivityContext = createContext<Partial<context>>({});
 
 export function ActivityContextProvider(props: any) {
-  const { activity, score, setIsAnswered, isAnswered } = props;
+  const { activity, score, setIsAnswered, isAnswered, theme } = props;
   return (
     <ActivityContext.Provider
       value={{
@@ -18,6 +19,7 @@ export function ActivityContextProvider(props: any) {
         score,
         setIsAnswered,
         isAnswered,
+        theme,
       }}
     >
       {props.children}

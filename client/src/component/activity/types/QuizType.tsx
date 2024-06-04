@@ -2,7 +2,7 @@ import MediaBox from "./div/MediaBox";
 import TextDiv from "./div/TextDiv";
 import TableDiv from "./div/TableDiv";
 import AudioDiv from "./div/AudioDiv";
-import ReactMarkdown from "react-markdown";
+import he from "he";
 import { useState, useEffect } from "react";
 import { ActivityContext } from "../activityContext";
 import { useContext } from "react";
@@ -67,7 +67,9 @@ function QuizType() {
       <div className="activityQuiz">
         {activity.header && (
           <h6>
-            <ReactMarkdown>{activity.header}</ReactMarkdown>
+            <span
+              dangerouslySetInnerHTML={{ __html: he.decode(activity.header) }}
+            ></span>
           </h6>
         )}
         <div className="quizOptions">
