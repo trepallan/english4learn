@@ -8,7 +8,9 @@ async function getActivities(req: any, res: any) {
 
     const theme = await themeModel.findById(id);
     if (!theme) return res.status(404).json({ message: "Theme not found" });
-    const activities = await activityModel.find({ theme: id });
+    const activities = await activityModel
+      .find({ theme: id })
+      .sort({ index: 1 });
     if (!activities)
       return res.status(404).json({ message: "Activities not found" });
 

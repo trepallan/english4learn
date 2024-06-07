@@ -7,6 +7,7 @@ const courseSchema = new mongoose.Schema({
     required: true,
   },
   unit_count: Number,
+  theme_count: Number,
 });
 
 export default mongoose.model("Course", courseSchema);

@@ -5,35 +5,40 @@ import { useEffect, useState } from "react";
 function Concentration() {
   const { activity, score, setIsAnswered } = useContext(ActivityContext);
   const [options, setOptions] = useState<any[]>([]);
-  const [chances, setChances] = useState(3);
+  const [chances, setChances] = useState(4);
   const [selected, setSelected] = useState<any>("");
 
+  console.log(activity);
   useEffect(() => {
     setOptions(activity.concentration);
   }, [activity]);
 
-  function checkout() {
-    let i = 0;
-    document.querySelectorAll(".concentrationOption").forEach((option: any) => {
-      if (option.classList.contains("disabled")) i++; // If option is disabled it means it is correct
-    });
-
-    if (options.length === i) {
-      score.current.correct += 1;
-      score.current.total += 1;
-      setIsAnswered(true);
-      document.querySelector(".correctanswer")?.classList.remove("hidden");
-    }
-
-    if (chances === 0) {
+  function checkout(isRight: boolean) {
+    if (isRight) {
+      let i = 0;
       document
         .querySelectorAll(".concentrationOption")
         .forEach((option: any) => {
-          option.classList.add("disabled");
+          if (option.classList.contains("disabled")) i++; // If option is disabled it means it is correct
         });
-      score.current.total += 1;
-      setIsAnswered(true);
-      document.querySelector(".wronganswer")?.classList.remove("hidden");
+
+      if (options.length === i) {
+        score.current.correct += 1;
+        score.current.total += 1;
+        setIsAnswered(true);
+        document.querySelector(".correctanswer")?.classList.remove("hidden");
+      }
+    } else {
+      if (chances - 1 === 0) {
+        document
+          .querySelectorAll(".concentrationOption")
+          .forEach((option: any) => {
+            option.classList.add("disabled");
+          });
+        score.current.total += 1;
+        setIsAnswered(true);
+        document.querySelector(".wronganswer")?.classList.remove("hidden");
+      }
     }
   }
 
@@ -47,6 +52,8 @@ function Concentration() {
           document.querySelectorAll(".selected").forEach((option: any) => {
             option.classList.add("disabled");
           });
+
+          checkout(true);
         } else {
           document.querySelectorAll(".selected").forEach((option: any) => {
             option.classList.add("wrongGuess");
@@ -58,6 +65,8 @@ function Concentration() {
           }, 4000);
 
           setChances((chances) => chances - 1);
+
+          checkout(false);
         }
         setSelected("");
         document.querySelectorAll(".selected").forEach((option: any) => {
@@ -68,10 +77,7 @@ function Concentration() {
           if (option !== event.target) option.classList.remove("selected");
         });
         setSelected(event.target.getAttribute("data-key"));
-        return;
       }
-
-      checkout();
     } else {
       event.target.classList.remove("selected");
       setSelected("");

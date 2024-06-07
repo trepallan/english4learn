@@ -5,7 +5,7 @@ async function getThemes(req: any, res: any) {
   try {
     const { id } = req.params;
     if (!id) return res.status(500).json({ message: "Something went wrong" });
-    const themes = await ThemeModel.find({ lesson: id });
+    const themes = await ThemeModel.find({ lesson: id }).sort({ index: 1 });
 
     res.status(200).json({ data: themes, path: await getPath(id) });
   } catch (error: any) {

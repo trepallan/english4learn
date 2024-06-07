@@ -5,8 +5,7 @@ async function getLessons(req: any, res: any) {
   try {
     const { id } = req.params;
     if (!id) return res.status(500).json({ message: "Something went wrong" });
-    const lessons = await LessonModel.find({ unit: id });
-
+    const lessons = await LessonModel.find({ unit: id }).sort({ index: 1 });
     res.status(200).json({ data: lessons, path: await getPath(id) });
   } catch (error: any) {
     res.status(500).json({ message: error.message });

@@ -14,7 +14,7 @@ function AppRouter() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
-          <Route path="/select-course/*" element={<SelectCourseRoute />} />
+          <Route path="/select/*" element={<SelectCourseRoute />} />
           <Route path="/register" element={<Auth />} />
           <Route path="/login" element={<Auth />} />
 

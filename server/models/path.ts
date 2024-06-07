@@ -4,10 +4,12 @@ const pathSchema = new mongoose.Schema({
   id: {
     type: mongoose.Schema.Types.ObjectId, // Could be Unit lesson or theme
     unique: true,
+    immutable: true,
   },
   path: {
     type: String,
     unique: true,
+    immutable: true,
   },
 });
 

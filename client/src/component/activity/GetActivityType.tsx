@@ -8,7 +8,7 @@ import { ActivityContext } from "./activityContext";
 import { useContext } from "react";
 import PronunciationActivity from "./types/Pronunciation";
 
-function SelectActivityType() {
+function GetActivityType() {
   const { activity } = useContext(ActivityContext);
   switch (activity.type) {
     case "concentration":
@@ -30,4 +30,4 @@ function SelectActivityType() {
   }
 }
 
-export default SelectActivityType;
+export default GetActivityType;

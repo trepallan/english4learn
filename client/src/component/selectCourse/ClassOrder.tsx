@@ -8,26 +8,26 @@ export interface classe {
 const classeOrder: classe[] = [
   {
     name: "Main",
-    aTagLink: "/select-course/",
+    aTagLink: "/select/",
     apiPath: "/",
     children: "",
   },
   {
     name: "Course",
-    aTagLink: "/select-course/unit/",
+    aTagLink: "/select/unit/",
     apiPath: "/courses",
 
     children: "Unit",
   },
   {
     name: "Unit",
-    aTagLink: "/select-course/lesson/",
+    aTagLink: "/select/lesson/",
     apiPath: "/courses/units/",
     children: "Lesson",
   },
   {
     name: "Lesson",
-    aTagLink: "/select-course/theme/",
+    aTagLink: "/select/theme/",
     apiPath: "/courses/lessons/",
     children: "Theme",
   },

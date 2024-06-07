@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import SelectActivityType from "./SelectActivityType";
+import SelectActivityType from "./GetActivityType";
 import { useParams } from "react-router-dom";
 import api from "../../authentication/api";
 import { ActivityContextProvider } from "./activityContext";
 import "../../css/activity.css";
 import LessonConcuded from "./comcludes/LessonConcuded";
+import ErrorHandler from "../Error";
 
 interface score {
   correct: number;
@@ -24,15 +25,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function ActivityRoot() {
+  const [concludedLesson, setConcudedLesson] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAnswered, setIsAnswered] = useState(false);
   const [activities, setActivities] = useState([]);
   const [theme, setTheme] = useState<any>({});
   const [activity, setActivity] = useState<any>({});
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState(false);
   const [index, setIndex] = useState(0);
   const themeId = useParams().themeId;
-  if (!themeId) setMessage("Something went wrong");
+  if (!themeId) setError(true);
   const score = useRef<score>({ correct: 0, total: 0 }); //Track user score
 
   useEffect(() => {
@@ -57,21 +59,22 @@ function ActivityRoot() {
       let percentage = (score.current.correct / score.current.total) * 100;
       if (Number.isNaN(percentage)) percentage = 100; //  If no score
       const response = await api.post(`/activities/mark_as_done/${themeId}`, {
-        percentage,
+        percentage: percentage.toFixed(2),
       });
-      if (response.status !== 200) return setMessage(response.message);
+      if (response.status !== 200) return setError(true);
       const hasNext = response.hasNext;
       if (!hasNext) {
         //  If lesson is finished
-        const lesson = response.lesson;
-        if (!lesson) return setMessage("Something went wrong");
-        return <LessonConcuded lesson={lesson} />;
-      }
+        if (!response.lesson || !response.score) return setError(true);
 
+        const lessonWithScore = response.lesson;
+        lessonWithScore.score = response.score;
+        return setConcudedLesson(lessonWithScore); // response.lesson is the current lesson
+      }
       //  If there is a next theme
       const nextTheme = response.nextTheme;
-      if (!nextTheme) return setMessage("Something went wrong");
-      return window.location.replace(`/activities/${nextTheme._id}`);
+      if (!nextTheme) return setError(true);
+      return window.location.replace(`/activity/${nextTheme._id}`);
     }
 
     //  If there is a next activity
@@ -83,7 +86,11 @@ function ActivityRoot() {
       if (!themeId) return;
 
       const response = await api.get(`/activities/${themeId}`);
-      if (response.status !== 200) setMessage(response.message);
+      if (response.status !== 200) {
+        console.log(response.message);
+        setError(true);
+        return;
+      }
 
       setActivities(response.activities);
       setTheme(response.theme);
@@ -103,7 +110,11 @@ function ActivityRoot() {
     );
 
   // Error message
-  if (message) return <h1>{message}</h1>;
+  if (error) return <ErrorHandler />;
+
+  // If lesson id finished
+  if (concludedLesson !== null)
+    return <LessonConcuded lesson={concludedLesson} />;
 
   // Display activities
   return (
@@ -119,7 +130,7 @@ function ActivityRoot() {
           {/* Header */}
           <div className="ThemeHeader">
             <div className="BackButton">
-              <a href={"/select-course/theme/" + theme.lesson}> &#8592; Back</a>
+              <a href={"/select/theme/" + theme.lesson}> &#8592; Back</a>
             </div>
             {theme.name} {index + 1} / {activities.length}
           </div>

@@ -15,7 +15,14 @@ const unitSchema = new mongoose.Schema({
     required: true,
   },
   name: String,
-  lesson_count: Number,
+  lesson_count: {
+    type: Number,
+    required: true,
+  },
+  theme_count: {
+    type: Number,
+    required: true,
+  },
 });
 
 export default mongoose.model("Unit", unitSchema);

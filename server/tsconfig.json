@@ -14,7 +14,7 @@
     "strict": true /* Enable all strict type-checking options. */,
     "skipLibCheck": true
   },
-  "include": ["./**/*"],
+  "include": ["./**/*.ts"],
   "exclude": [
     "./plugins/**/*",
     "./typings/**/*",

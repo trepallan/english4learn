@@ -133,6 +133,7 @@ function SpellingTyte() {
           <strong>Chances: {chances}</strong>
         </p>
         <input
+          autoFocus
           type="text"
           onChange={updateGuess}
           className="form-control spellingInput"

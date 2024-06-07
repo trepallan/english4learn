@@ -16,7 +16,7 @@ const activitySchema = new mongoose.Schema({
     type: String,
     enum: [
       "concentration",
-      "mutioption",
+      "multioption",
       "quiz",
       "read",
       "pronunciation",

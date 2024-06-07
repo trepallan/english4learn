@@ -454,3 +454,34 @@
   box-shadow: 2px 2px 2px rgb(15, 64, 44) inset;
   background-color: rgb(75, 181, 126);
 }
+
+/* Completed */
+
+.LessonConcuded .Concluded {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: #427b50 solid 4px;
+  width: 500px;
+  min-height: 300px;
+  background-color: #223b34;
+  color: white;
+}
+
+.LessonConcuded .ConcludedButtons {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.LessonConcuded .ConcludedButtons button {
+  width: 400px;
+}

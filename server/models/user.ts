@@ -16,6 +16,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     select: false,
   },
+  theme: {
+    // Keep track of the user's last completed theme
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Theme",
+  },
 });
 
 export default mongoose.model("User", userSchema);

@@ -75,6 +75,6 @@ async function request(config: {
 // |__/  |__/|__/      |______/
 export default class api {
   static get = (path: string) => request({ method: "GET", path });
-  static post = (path: string, body: any) =>
+  static post = (path: string, body?: any) =>
     request({ method: "POST", path, body });
 }
