@@ -16,6 +16,10 @@ const themeSchema = new mongoose.Schema({
   },
   name: String,
   activity_count: Number,
+  isDone: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 export default mongoose.model("Theme", themeSchema);

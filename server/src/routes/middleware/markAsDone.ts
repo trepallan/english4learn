@@ -7,7 +7,7 @@ const markAsRead = [
     .isNumeric()
     .withMessage("percentage is required")
     .custom((value) => {
-      if (value < 0 || value > 100) {
+      if (value < 0 || value > 101) {
         throw new Error("percentage must be between 0 and 100");
       }
       return true;

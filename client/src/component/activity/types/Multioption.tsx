@@ -31,7 +31,6 @@ function Multioption() {
         }
       });
     }
-    console.log(score.current);
     setIsAnswered(true);
   }
 

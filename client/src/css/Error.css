@@ -3,7 +3,16 @@
   width: 100vw;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px springgreen solid;
+  background-color: rgba(60, 184, 65, 0.5);
+}
+
+.errorAbsolute h1 {
+  font-size: 5rem;
+}
+
+.errorAbsolute h3 {
+  font-size: 2rem;
 }

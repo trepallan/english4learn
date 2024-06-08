@@ -19,25 +19,32 @@ async function getNextLesson(req: any, res: any) {
       return res.status(404).json({ message: "Unit not found" });
     }
 
-    if (unit.lesson_count < lesson.index) {
-      const themesScore = await scoreModel.find({ unit: unit._id });
+    // if unit has no more lessons
+    if (unit.lesson_count <= lesson.index) {
+      // Get score
+      const themesScore = await scoreModel.find({
+        unit: unit._id,
+        user: req.user._id,
+      });
 
-      let total = 0;
+      if (themesScore.length === 0) return res.status(200).json({ unit });
 
-      for (let i = 0; i < themesScore.length; i++) {
-        total += themesScore[i].score;
-      }
+      let total = themesScore.reduce((a: any, b: any) => a + b.score, 0);
 
-      total = total.toFixed(2) as any;
-      return res.status(200).json({ unit, total });
+      const average = Math.round(total / themesScore.length);
+
+      return res.status(200).json({ unit, total: average });
     }
 
     const nextLesson = await lessonModel
-      .find({ index: lesson.index + 1, unit: unit._id })
+      .findOne({ index: lesson.index + 1, unit: unit._id })
       .select("_id");
 
+    if (!nextLesson)
+      return res.status(404).json({ message: "Lesson not found" });
+
     const theme = await themeModel
-      .findOne({ lesson: lesson._id, index: 1 })
+      .findOne({ lesson: nextLesson._id, index: 1 })
       .select("_id");
 
     if (!theme) return res.status(404).json({ message: "Theme not found" });

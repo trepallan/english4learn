@@ -24,12 +24,13 @@ const scoreSchema = new mongoose.Schema({
   theme: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Theme",
-    unique: true,
     required: true,
   },
   score: {
     type: Number,
     required: true,
+    min: 0,
+    max: 100,
   },
 });
 

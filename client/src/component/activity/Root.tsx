@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import api from "../../authentication/api";
 import { ActivityContextProvider } from "./activityContext";
 import "../../css/activity.css";
-import LessonConcuded from "./comcludes/LessonConcuded";
+import LessonConcuded from "./comcludes/LessonConcluded";
 import ErrorHandler from "../Error";
 
 interface score {
@@ -57,18 +57,22 @@ function ActivityRoot() {
     if (index + 1 >= activities.length) {
       //  If last activity
       let percentage = (score.current.correct / score.current.total) * 100;
-      if (Number.isNaN(percentage)) percentage = 100; //  If no score
+      if (Number.isNaN(percentage)) percentage = 101; //  101 means that the activity is not a quiz
       const response = await api.post(`/activities/mark_as_done/${themeId}`, {
-        percentage: percentage.toFixed(2),
+        percentage,
       });
       if (response.status !== 200) return setError(true);
       const hasNext = response.hasNext;
       if (!hasNext) {
         //  If lesson is finished
-        if (!response.lesson || !response.score) return setError(true);
+        if (!response.lesson) return setError(true);
+
+        let score;
+        if (response.score) score = response.score + "%";
+        else score = "NaN";
 
         const lessonWithScore = response.lesson;
-        lessonWithScore.score = response.score;
+        lessonWithScore.score = score;
         return setConcudedLesson(lessonWithScore); // response.lesson is the current lesson
       }
       //  If there is a next theme
@@ -114,7 +118,9 @@ function ActivityRoot() {
 
   // If lesson id finished
   if (concludedLesson !== null)
-    return <LessonConcuded lesson={concludedLesson} />;
+    return (
+      <LessonConcuded lesson={concludedLesson} key={concludedLesson._id} />
+    );
 
   // Display activities
   return (

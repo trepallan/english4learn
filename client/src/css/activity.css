@@ -456,24 +456,20 @@
 }
 
 /* Completed */
-
-.LessonConcuded .Concluded {
+.ClassConcuded {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: #427b50 solid 4px;
   width: 500px;
   min-height: 300px;
-  background-color: #223b34;
-  color: white;
 }
 
-.LessonConcuded .ConcludedButtons {
+.ConcludedButtons {
   position: absolute;
   bottom: 10px;
   width: 100%;
@@ -482,6 +478,24 @@
   justify-content: space-evenly;
 }
 
-.LessonConcuded .ConcludedButtons button {
+.ConcludedButtons button {
   width: 400px;
+}
+
+.LessonConcuded .Concluded {
+  border: #427b50 solid 4px;
+  background-color: #223b34;
+  color: white;
+}
+
+.UnitConcluded .Concluded {
+  box-shadow: #451377 0px 5px 70px;
+  background-color: #51064e;
+  color: white;
+}
+
+.CourseConcuded .Concluded {
+  box-shadow: 2px 5px 70px #451377 inset, 0px 5px 70px #1a0319;
+  background-color: #1a0319;
+  color: white;
 }
