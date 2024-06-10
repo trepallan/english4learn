@@ -1,5 +1,6 @@
 import activityModel from "../../../models/activity";
 import themeModel from "../../../models/theme";
+import userModel from "../../../models/user";
 
 async function getActivities(req: any, res: any) {
   try {
@@ -13,6 +14,9 @@ async function getActivities(req: any, res: any) {
       .sort({ index: 1 });
     if (!activities)
       return res.status(404).json({ message: "Activities not found" });
+
+    // Set user theme
+    await userModel.findByIdAndUpdate(req.user._id, { theme: theme._id });
 
     res.status(200).json({ activities, theme });
   } catch (err: any) {

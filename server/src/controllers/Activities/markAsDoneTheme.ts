@@ -1,8 +1,7 @@
 import themeModel from "../../../models/theme";
-import scoreModel from "../../../models/score";
+import CompletedThemes from "../../../models/CompletedThemes";
 import lessonModel from "../../../models/lesson";
 import { getPath } from "../../../models/path";
-import userModel from "../../../models/user";
 async function markAsDone(req: any, res: any) {
   const { id } = req.params;
 
@@ -11,37 +10,37 @@ async function markAsDone(req: any, res: any) {
   percentage = Number(percentage); // Make sure that the percentage is a number
 
   try {
-    const theme = await themeModel.findByIdAndUpdate(id, { done: true });
-    if (!theme) {
-      return res.status(404).json({ message: "Theme not found" });
-    }
+    const theme = await themeModel.findById(id);
+    if (!theme) return res.status(404).json({ message: "Theme not found" });
 
+    // Check if a score already exists for this theme
+    const existingScore = await CompletedThemes.findOne({
+      theme: theme._id,
+      user: req.user._id,
+    });
+
+    if (percentage === 101) percentage = null;
     //  101 means that the activity is not any type of quiz wich means that is no need to create a score
-    if (percentage !== 101) {
-      // Check if a score already exists for this theme
-      const existingScore = await scoreModel.findOne({
-        theme: theme._id,
-        user: req.user._id,
-      });
-      if (existingScore) {
-        // Update the existing score
-        existingScore.score = Math.round(percentage);
-        await existingScore.save();
-      } else {
-        const Lessonpath = await getPath(theme.lesson.toString());
-        // Create a new score
-        await scoreModel.create({
-          user: req.user._id,
-          course: Lessonpath[0].id, // Course id
-          unit: Lessonpath[1].id, // unit id
-          lesson: theme.lesson,
-          theme: theme._id,
-          score: Math.round(percentage),
-        });
-      }
-    }
+    else percentage = Math.round(percentage);
 
-    await userModel.findByIdAndUpdate(req.user._id, { theme: theme._id }); // Keep track of the user's theme
+    if (existingScore) {
+      // Update the existing score
+      if (percentage !== null) {
+        existingScore.score = percentage;
+        await existingScore.save();
+      }
+    } else {
+      const Lessonpath = await getPath(theme.lesson.toString());
+      // Create a new score
+      await CompletedThemes.create({
+        user: req.user._id,
+        course: Lessonpath[0].id, // Course id
+        unit: Lessonpath[1].id, // unit id
+        lesson: theme.lesson,
+        theme: theme._id,
+        score: percentage,
+      });
+    }
 
     const lesson = await lessonModel.findById(theme.lesson);
     if (!lesson) throw new Error("Lesson not found");
@@ -55,9 +54,11 @@ async function markAsDone(req: any, res: any) {
 
     // If there is no next themes
     if (!hasNext) {
-      const lessonScore = await scoreModel
-        .find({ lesson: lesson.id, user: req.user._id })
-        .select("score");
+      const lessonScore = await CompletedThemes.find({
+        lesson: lesson.id,
+        user: req.user._id,
+        score: { $ne: null },
+      }).select("score");
 
       if (!lessonScore) throw new Error("Lesson score not found");
 

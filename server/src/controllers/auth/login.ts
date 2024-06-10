@@ -6,7 +6,7 @@ async function login(request: any, response: any) {
   const { email, password } = request.body;
 
   try {
-    const user = await UserModel.findOne({ email });
+    const user = await UserModel.findOne({ email }).select("+hashed_password");
     if (!user) {
       return response.status(400).json({
         message: "User not found",
@@ -22,13 +22,18 @@ async function login(request: any, response: any) {
         });
       }
     } catch (error) {
+      console.log(error);
       return response.status(500).json({
         message: "Invalid email or password",
       });
     }
 
-    const auth = jwtCreate(user);
-    return response.status(200).json({ user, auth });
+    // Creating a copy of the user object without the hashed password
+    const userWithoutPassword = { ...user.toObject() } as any;
+    delete userWithoutPassword.hashed_password;
+
+    const auth = jwtCreate(userWithoutPassword);
+    return response.status(200).json({ user: userWithoutPassword, auth });
   } catch (error) {
     return response.status(500).json({
       message: "Internal server error",

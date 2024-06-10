@@ -7,7 +7,10 @@ const courseSchema = new mongoose.Schema({
     required: true,
   },
   unit_count: Number,
-  theme_count: Number,
+  theme_count: {
+    type: Number,
+    required: true,
+  },
 });
 
 export default mongoose.model("Course", courseSchema);

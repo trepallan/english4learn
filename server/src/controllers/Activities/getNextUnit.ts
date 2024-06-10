@@ -2,7 +2,7 @@ import unitModel from "../../../models/unit";
 import courseModel from "../../../models/course";
 import themeModel from "../../../models/theme";
 import lessonModel from "../../../models/lesson";
-import scoreModel from "../../../models/score";
+import CompletedThemes from "../../../models/CompletedThemes";
 
 async function getNextUnit(req: any, res: any) {
   const { id } = req.params;
@@ -19,9 +19,11 @@ async function getNextUnit(req: any, res: any) {
 
     // If there is no next unit into the course
     if (course.unit_count === unit.index) {
-      const themesScore = await scoreModel
-        .find({ user: req.user._id, course: course._id })
-        .select("score");
+      const themesScore = await CompletedThemes.find({
+        user: req.user._id,
+        course: course._id,
+        score: { $ne: null },
+      }).select("score");
       if (themesScore.length === 0) return res.status(200).json({ course });
       const total = themesScore.reduce((a: any, b: any) => a + b.score, 0);
 

@@ -3,3 +3,61 @@
   font-weight: bold;
   cursor: pointer;
 }
+
+.stickyTableHead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.seeDetailsBtn {
+  text-decoration: none;
+  font-family: Apple Chancery, cursive;
+  color: #036928;
+  cursor: pointer;
+}
+
+.seeDetailsPopup {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.seeDetailsPopup .setShowToFalse {
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.seeDetailsPopup .seeDetailsDiv {
+  position: relative;
+  z-index: 3;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  min-height: 40vh;
+  min-width: 30vw;
+  text-align: center;
+  padding: 20px;
+}
+
+.seeDetailsPopup .seeDetailsDiv * {
+  margin-bottom: 10px;
+}
+
+.seeDetailsPopup .seeDetailsDiv .closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}

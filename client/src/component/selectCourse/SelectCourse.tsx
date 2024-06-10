@@ -6,6 +6,7 @@ import React from "react";
 import Table from "./Table";
 import classeOrder, { classe } from "./ClassOrder";
 import Error from "../Error";
+import Loading from "../Loading";
 
 interface Course {
   _id: number;
@@ -54,15 +55,7 @@ export default function SelectCourse(props: any) {
   if (error || !classe) return <Error />;
 
   // Spinner if loading
-  if (isLoading)
-    return (
-      <div
-        className="spinner-grow text-success activityIsLoading"
-        role="status"
-      >
-        <span className="visually-hidden" />
-      </div>
-    );
+  if (isLoading) return <Loading />;
 
   return (
     <>
@@ -78,6 +71,7 @@ export default function SelectCourse(props: any) {
       <h1>Select {classe.name}</h1>
       <Table
         data={courses}
+        type={classe.name}
         aTagLink={classe.aTagLink}
         children={classe.children}
       />

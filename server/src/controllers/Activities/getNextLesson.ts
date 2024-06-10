@@ -1,6 +1,6 @@
 import lessonModel from "../../../models/lesson";
 import themeModel from "../../../models/theme";
-import scoreModel from "../../../models/score";
+import CompletedThemes from "../../../models/CompletedThemes";
 import unitModel from "../../../models/unit";
 
 async function getNextLesson(req: any, res: any) {
@@ -22,10 +22,11 @@ async function getNextLesson(req: any, res: any) {
     // if unit has no more lessons
     if (unit.lesson_count <= lesson.index) {
       // Get score
-      const themesScore = await scoreModel.find({
+      const themesScore = await CompletedThemes.find({
         unit: unit._id,
         user: req.user._id,
-      });
+        score: { $ne: null },
+      }).select("score");
 
       if (themesScore.length === 0) return res.status(200).json({ unit });
 

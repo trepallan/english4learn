@@ -6,6 +6,7 @@ import { ActivityContextProvider } from "./activityContext";
 import "../../css/activity.css";
 import LessonConcuded from "./comcludes/LessonConcluded";
 import ErrorHandler from "../Error";
+import Loading from "../Loading";
 
 interface score {
   correct: number;
@@ -56,6 +57,7 @@ function ActivityRoot() {
     setIsAnswered(false);
     if (index + 1 >= activities.length) {
       //  If last activity
+      setIsLoading(true);
       let percentage = (score.current.correct / score.current.total) * 100;
       if (Number.isNaN(percentage)) percentage = 101; //  101 means that the activity is not a quiz
       const response = await api.post(`/activities/mark_as_done/${themeId}`, {
@@ -65,6 +67,7 @@ function ActivityRoot() {
       const hasNext = response.hasNext;
       if (!hasNext) {
         //  If lesson is finished
+        setIsLoading(false);
         if (!response.lesson) return setError(true);
 
         let score;
@@ -76,6 +79,7 @@ function ActivityRoot() {
         return setConcudedLesson(lessonWithScore); // response.lesson is the current lesson
       }
       //  If there is a next theme
+
       const nextTheme = response.nextTheme;
       if (!nextTheme) return setError(true);
       return window.location.replace(`/activity/${nextTheme._id}`);
@@ -89,6 +93,7 @@ function ActivityRoot() {
     (async () => {
       if (!themeId) return;
 
+      setIsLoading(true);
       const response = await api.get(`/activities/${themeId}`);
       if (response.status !== 200) {
         console.log(response.message);
@@ -103,15 +108,7 @@ function ActivityRoot() {
   }, [themeId]);
 
   // Spinner if loading
-  if (isLoading)
-    return (
-      <div
-        className="spinner-grow text-success activityIsLoading"
-        role="status"
-      >
-        <span className="visually-hidden" />
-      </div>
-    );
+  if (isLoading) return <Loading />;
 
   // Error message
   if (error) return <ErrorHandler />;

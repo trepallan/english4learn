@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
-const scoreSchema = new mongoose.Schema({
+// Keep track of All themes completed by a user
+const themeSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -28,10 +29,9 @@ const scoreSchema = new mongoose.Schema({
   },
   score: {
     type: Number,
-    required: true,
     min: 0,
     max: 100,
   },
 });
 
-export default mongoose.model("Score", scoreSchema);
+export default mongoose.model("Score", themeSchema);
