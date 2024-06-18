@@ -46,7 +46,7 @@ function Home() {
           onClick={GoToNextActivity}
           className="btn btn-success btn-lg"
         >
-          Start Activity
+          Go to next activity
         </button>
 
         <hr />

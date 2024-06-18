@@ -8,7 +8,7 @@ interface apiConfig {
   headers: any;
 }
 
-const url = "http://localhost:5000";
+const url = "http://18.188.5.124:8080";
 let token = localStorage.getItem("auth_token");
 
 function getHeaders(Newtoken?: string) {

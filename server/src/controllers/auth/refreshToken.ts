@@ -46,7 +46,7 @@ async function refreshToken(req: any, res: any) {
       }
     );
   } catch (error) {
-    console.log(error);
+    return res.status(401).json({ message: "expired refresh token" });
   }
 }
 

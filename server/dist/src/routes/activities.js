@@ -1,0 +1,24 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const getActivities_1 = __importDefault(require("../controllers/Activities/getActivities"));
+const markAsDoneTheme_1 = __importDefault(require("../controllers/Activities/markAsDoneTheme"));
+const getNextLesson_1 = __importDefault(require("../controllers/Activities/getNextLesson"));
+const getNextMD_1 = __importDefault(require("./middleware/getNextMD"));
+const markAsDone_1 = __importDefault(require("./middleware/markAsDone"));
+const getNextUnit_1 = __importDefault(require("../controllers/Activities/getNextUnit"));
+const getNextCourse_1 = __importDefault(require("../controllers/Activities/getNextCourse"));
+const getNextActivity_1 = __importDefault(require("../controllers/Activities/getNextActivity"));
+const getInfo_1 = __importDefault(require("../controllers/Activities/getInfo"));
+const express_1 = require("express");
+const router = (0, express_1.Router)();
+router.get("/next", getNextActivity_1.default);
+router.get("/:id", getActivities_1.default);
+router.post("/mark_as_done/:id", markAsDone_1.default, markAsDoneTheme_1.default);
+router.post("/nextLesson/:id", getNextMD_1.default, getNextLesson_1.default);
+router.post("/nextUnit/:id", getNextMD_1.default, getNextUnit_1.default);
+router.post("/nextCourse/:id", getNextMD_1.default, getNextCourse_1.default);
+router.get("/get_info/:type/:id/:theme_count", getInfo_1.default);
+exports.default = router;

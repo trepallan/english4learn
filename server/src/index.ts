@@ -1,4 +1,5 @@
 import express from "express";
+import compression from "compression";
 import http from "http";
 import cors from "cors";
 import startup from "./startup/startup";
@@ -28,6 +29,7 @@ const corsOptions = {
 export const app = express();
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(compression());
 
 startup(app);
 
