@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
   },
   theme: {
     // Keep track of the user's last completed theme
+    default: new mongoose.Types.ObjectId("6662f09b511149d2b9cced3c"), // first class
     type: mongoose.Schema.Types.ObjectId,
     ref: "Theme",
   },

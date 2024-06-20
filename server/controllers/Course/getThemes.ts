@@ -1,5 +1,5 @@
-import ThemeModel from "../../../models/theme";
-import { getPath } from "../../../models/path";
+import ThemeModel from "../../models/theme";
+import { getPath } from "../../models/path";
 
 async function getThemes(req: any, res: any) {
   try {

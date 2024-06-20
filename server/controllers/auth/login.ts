@@ -1,4 +1,4 @@
-import UserModel from "../../../models/user";
+import UserModel from "../../models/user";
 import bcrypt from "bcrypt";
 import jwtCreate from "../../utils/jwtCreate";
 

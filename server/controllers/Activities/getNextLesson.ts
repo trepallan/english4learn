@@ -1,7 +1,7 @@
-import lessonModel from "../../../models/lesson";
-import themeModel from "../../../models/theme";
-import CompletedThemes from "../../../models/CompletedThemes";
-import unitModel from "../../../models/unit";
+import lessonModel from "../../models/lesson";
+import themeModel from "../../models/theme";
+import CompletedThemes from "../../models/CompletedThemes";
+import unitModel from "../../models/unit";
 
 async function getNextLesson(req: any, res: any) {
   const { id } = req.params;

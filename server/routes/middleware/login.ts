@@ -1,4 +1,4 @@
-import User from "../../../models/user";
+import User from "../../models/user";
 import { body, validationResult } from "express-validator";
 
 const login = [

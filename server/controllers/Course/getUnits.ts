@@ -1,5 +1,5 @@
-import UnitModel from "../../../models/unit";
-import { getPath } from "../../../models/path";
+import UnitModel from "../../models/unit";
+import { getPath } from "../../models/path";
 
 async function getUnits(req: any, res: any) {
   try {

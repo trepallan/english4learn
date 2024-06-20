@@ -1,6 +1,6 @@
-import activityModel from "../../../models/activity";
-import themeModel from "../../../models/theme";
-import userModel from "../../../models/user";
+import activityModel from "../../models/activity";
+import themeModel from "../../models/theme";
+import userModel from "../../models/user";
 
 async function getActivities(req: any, res: any) {
   try {

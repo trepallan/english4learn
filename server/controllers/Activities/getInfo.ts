@@ -1,4 +1,4 @@
-import CompletedThemes from "../../../models/CompletedThemes";
+import CompletedThemes from "../../models/CompletedThemes";
 
 async function getInfo(req: any, res: any) {
   const { type, id, theme_count } = req.params;

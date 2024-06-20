@@ -1,8 +1,8 @@
-import unitModel from "../../../models/unit";
-import courseModel from "../../../models/course";
-import themeModel from "../../../models/theme";
-import lessonModel from "../../../models/lesson";
-import CompletedThemes from "../../../models/CompletedThemes";
+import unitModel from "../../models/unit";
+import courseModel from "../../models/course";
+import themeModel from "../../models/theme";
+import lessonModel from "../../models/lesson";
+import CompletedThemes from "../../models/CompletedThemes";
 
 async function getNextUnit(req: any, res: any) {
   const { id } = req.params;

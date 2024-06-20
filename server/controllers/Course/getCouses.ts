@@ -1,4 +1,4 @@
-import CourseMoel from "../../../models/course"; //TODO: change
+import CourseMoel from "../../models/course"; //TODO: change
 
 async function getCourses(req: any, res: any) {
   try {

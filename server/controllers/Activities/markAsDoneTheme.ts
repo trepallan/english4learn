@@ -1,7 +1,7 @@
-import themeModel from "../../../models/theme";
-import CompletedThemes from "../../../models/CompletedThemes";
-import lessonModel from "../../../models/lesson";
-import { getPath } from "../../../models/path";
+import themeModel from "../../models/theme";
+import CompletedThemes from "../../models/CompletedThemes";
+import lessonModel from "../../models/lesson";
+import { getPath } from "../../models/path";
 async function markAsDone(req: any, res: any) {
   const { id } = req.params;
 

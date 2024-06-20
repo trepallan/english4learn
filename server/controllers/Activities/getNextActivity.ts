@@ -1,5 +1,5 @@
-import userModel from "../../../models/user";
-import themeModel from "../../../models/theme";
+import userModel from "../../models/user";
+import themeModel from "../../models/theme";
 
 async function getNextActivity(req: any, res: any) {
   try {

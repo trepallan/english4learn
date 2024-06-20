@@ -1,5 +1,5 @@
-import LessonModel from "../../../models/lesson";
-import { getPath } from "../../../models/path";
+import LessonModel from "../../models/lesson";
+import { getPath } from "../../models/path";
 
 async function getLessons(req: any, res: any) {
   try {

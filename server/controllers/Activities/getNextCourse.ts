@@ -1,7 +1,7 @@
-import CourseModel from "../../../models/course";
-import unitModel from "../../../models/unit";
-import lessonModel from "../../../models/lesson";
-import themeModel from "../../../models/theme";
+import CourseModel from "../../models/course";
+import unitModel from "../../models/unit";
+import lessonModel from "../../models/lesson";
+import themeModel from "../../models/theme";
 
 async function getNextCourse(req: any, res: any) {
   try {
